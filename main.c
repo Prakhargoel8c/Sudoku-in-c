@@ -1,16 +1,15 @@
-#include<windows.h>
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
+#include <windows.h>
+#include <gl/gl.h>
 #include <GL/glut.h>
-#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
 float row_sel=-2;
+int i,j,SRN=0,k,m;
 
 char ms[5];
-int board [9][9]={0,0,0,0,0,0,0,0,0,
+int board[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
@@ -20,7 +19,7 @@ int board [9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0};
 int boardset=0;
-int boardset1 [9][9]={0,0,0,0,0,0,0,0,0,
+int boardset1[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
@@ -33,9 +32,9 @@ float col_sel=-2;
 int numboxsafe(int row,int col,int num)
 {
  int flag=1;
- for(int i=0;i<3;i++)
+ for(i=0;i<3;i++)
  {
-     for(int j=0;j<3;j++)
+     for(j=0;j<3;j++)
      {
          if(board[row+i][col+j]==num)
          {
@@ -47,10 +46,11 @@ int numboxsafe(int row,int col,int num)
 }
 int numrowsafe(int row,int num)
 {
-
+return 0;
 }
 int numcolsafe(int col,int num)
 {
+return 0;
 
 }
 
@@ -61,7 +61,7 @@ int CheckIfSafe(int i,int j,int num)
                 numboxsafe(i-i%SRN, j-j%SRN, num));
     }
 
-void remfill(int i,int j)
+int remfill(int i,int j)
 {
     if(j>=9)
     {
@@ -72,6 +72,7 @@ void remfill(int i,int j)
         i=0;
     }
 
+return 0;
 
 
 }
@@ -85,9 +86,9 @@ int genrand()
 void boxfill(int row,int col)
 {
     int num;
-    for(int i=0;i<3;i++)
+    for(i=0;i<3;i++)
     {
-        for(int j=0;j<3;j++)
+        for(j=0;j<3;j++)
         {
             do
             {
@@ -98,19 +99,24 @@ void boxfill(int row,int col)
             boardset1[row+i][col+j]=num;
         }
     }
+
+
 }
-void diagfill()
+int diagfill()
 {
- for(int i=0;i>9;i=i+3)
+ for(i=0;i>9;i=i+3)
        {
          boxfill(i,i);
        }
+
+       return 0;
+
 }
-void generateboard()
+int generateboard()
 {
    diagfill();
-   remfill();
-   hole();
+   return 0;
+
 }
 
 void renderbitmap(double x,double y,void *font ,char d)
@@ -184,16 +190,16 @@ void maingame()
 	/*--------------------------------------------------*/
     }
 	glEnd();
-	for (int k=0;k<9;k++)
+	for ( k=0;k<9;k++)
     {
-        for(int m=0;m<9;m++)
+        for( m=0;m<9;m++)
         {
           sprintf(ms,"%d",board[k][m]);
           printdigit(k,m,ms[0]);
         }
     }
 }
-static void display()
+void display()
 {
     	glClearColor(0.98,0.98,0.823,1);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -230,7 +236,7 @@ int main(int argc,char** argv)
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
  glutInitWindowSize(500,500);
  glutInitWindowPosition(200,200);
- glutCreateWindow("sudoko");
+ glutCreateWindow("sudokonew");
  glutDisplayFunc(display);
  glutCreateMenu(menu);
 glutAddMenuEntry("Tutorial",1);
@@ -240,3 +246,4 @@ glutMouseFunc(mouse1);
  glutMainLoop();
  return 0;
 }
+
