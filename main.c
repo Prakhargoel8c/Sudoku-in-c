@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include<time.h>
 float row_sel=-2;
-int i,j,SRN=0,k,m;
+int i,j,SRN=3,k,m;
 
 char ms[5];
 int board[9][9]={0,0,0,0,0,0,0,0,0,
@@ -46,12 +46,27 @@ int numboxsafe(int row,int col,int num)
 }
 int numrowsafe(int row,int num)
 {
-return 0;
+    int flag=1;
+    for(i=0;i<9;i++)
+    {
+        if(board[row][i]==num)
+        {
+            flag=0;
+        }
+    }
+return flag;
 }
 int numcolsafe(int col,int num)
 {
-return 0;
-
+    int flag=1;
+    for(i=0;i<9;i++)
+    {
+        if(board[i][col]==num)
+        {
+            flag=0;
+        }
+         }
+return flag;
 }
 
 int CheckIfSafe(int i,int j,int num)
