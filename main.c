@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include <GL/glut.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
@@ -76,31 +75,70 @@ int CheckIfSafe(int i,int j,int num)
                 numboxsafe(i-i%SRN, j-j%SRN, num));
     }
 
-int remfill(int i,int j)
+int remfill(int rw,int col)
 {
-    if(j>=9)
+    if(col>=9 && rw<8)//column filled
     {
-        j=0;
+        col=0;
+        rw=rw+1;
     }
-    if(i>=3)
+    if(rw>=9 && col>=9)//completely filled
     {
-        i=0;
+        return 0;
+    }
+    if(rw<3)
+    {
+        if(col<3)
+        {
+            col=3;
+        }
+    }
+    else if(rw<6)
+    {
+        if(col>=3 && col<6)
+        {
+            col=6;
+        }
+    }
+    else
+    {
+        if (col ==6)
+            {
+                rw = rw + 1;
+                col = 0;
+                if (rw>=9)
+                    return 1;
+            }
+        }
+
+        for (i = 1; i<=9; i++)
+        {
+            if (CheckIfSafe(rw, col,i))
+            {
+                board[rw][col] =i;
+                if (remfill(rw, col+1))
+                    return 1;
+
+                board[rw][col] = 0;
+            }
+        }
+        return 0;
     }
 
-return 0;
-
-
-}
 int genrand()
 {
- srand(time(0));
+
  int no=rand();
- no=no%10;
- return no;
+ if(no>10)
+ {
+   no=no%10;
+ }
+return no;
+
 }
 void boxfill(int row,int col)
 {
-    int num;
+    int num,i,j;
     for(i=0;i<3;i++)
     {
         for(j=0;j<3;j++)
@@ -117,19 +155,18 @@ void boxfill(int row,int col)
 
 
 }
-int diagfill()
-{
- for(i=0;i>9;i=i+3)
-       {
-         boxfill(i,i);
-       }
-
-       return 0;
+void diagfill()
+{ int p;
+           for(p=0;p<9;p=p+3)
+           {
+               boxfill(p,p);
+           }
 
 }
 int generateboard()
 {
    diagfill();
+   remfill(0,3);
    return 0;
 
 }
@@ -247,6 +284,8 @@ void menu(int id)
   }
 int main(int argc,char** argv)
 {
+ srand(time(0));
+ generateboard();
  glutInit(&argc,argv);
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
  glutInitWindowSize(500,500);
