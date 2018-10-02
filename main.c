@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include<time.h>
 float row_sel=-2;
-int i,j,SRN=3,k,m;
+int i,j,SRN=3,k,m,N=9;
 
 char ms[5];
 int board[9][9]={0,0,0,0,0,0,0,0,0,
@@ -28,6 +28,17 @@ int boardset1[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0};
 float col_sel=-2;
+int genrand()
+{
+
+ int no=rand();
+ if(no>10)
+ {
+   no=no%10;
+ }
+return no;
+
+}
 int numboxsafe(int row,int col,int num)
 {
  int flag=1;
@@ -68,74 +79,62 @@ int numcolsafe(int col,int num)
 return flag;
 }
 
-int CheckIfSafe(int i,int j,int num)
+int CheckIfSafe(int a,int b,int num)
     {
-        return (numrowsafe(i, num) +
-                numcolsafe(j, num) +
-                numboxsafe(i-i%SRN, j-j%SRN, num));
+        int res=numrowsafe(a, num) +
+                numcolsafe(b, num) +
+                numboxsafe(a-a%SRN, b-b%SRN, num);
+        return (res);
     }
 
-int remfill(int rw,int col)
-{
-    if(col>=9 && rw<8)//column filled
+int fillRemaining(int i, int j)
     {
-        col=0;
-        rw=rw+1;
-    }
-    if(rw>=9 && col>=9)//completely filled
-    {
-        return 0;
-    }
-    if(rw<3)
-    {
-        if(col<3)
+        int num;
+        if (j>=N && i<N-1)
         {
-            col=3;
+            i = i + 1;
+            j = 0;
         }
-    }
-    else if(rw<6)
-    {
-        if(col>=3 && col<6)
+        if (i>=N && j>=N)
+            return 1;
+
+        if (i < SRN)
         {
-            col=6;
+            if (j < SRN)
+                j = SRN;
         }
-    }
-    else
-    {
-        if (col ==6)
+        else if (i < N-SRN)
+        {
+            if (j==(int)(i/SRN)*SRN)
+                j =  j + SRN;
+        }
+        else
+        {
+            if (j == N-SRN)
             {
-                rw = rw + 1;
-                col = 0;
-                if (rw>=9)
+                i = i + 1;
+                j = 0;
+                if (i>=N)
                     return 1;
             }
         }
 
-        for (i = 1; i<=9; i++)
+        for ( num = 1; num<=N; num++)
         {
-            if (CheckIfSafe(rw, col,i))
+            if (CheckIfSafe(i, j, num)==3)
             {
-                board[rw][col] =i;
-                if (remfill(rw, col+1))
+                board[i][j] = num;
+                if (fillRemaining(i, j+1))
                     return 1;
 
-                board[rw][col] = 0;
+                board[i][j] = 0;
             }
         }
         return 0;
     }
 
-int genrand()
-{
 
- int no=rand();
- if(no>10)
- {
-   no=no%10;
- }
-return no;
 
-}
 void boxfill(int row,int col)
 {
     int num,i,j;
@@ -166,7 +165,7 @@ void diagfill()
 int generateboard()
 {
    diagfill();
-   remfill(0,3);
+   fillRemaining(0,3);
    return 0;
 
 }
