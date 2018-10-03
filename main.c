@@ -32,9 +32,13 @@ int genrand()
 {
 
  int no=rand();
- if(no>10)
+ if(no>=10)
  {
    no=no%10;
+ }
+ if(no==0)
+ {
+     genrand();
  }
 return no;
 
@@ -162,10 +166,29 @@ void diagfill()
            }
 
 }
+void digholes()
+{
+    int a,rh,ch;
+    for(a=0;a<=17;a++)
+    {
+        rh=genrand()-1;
+        ch=genrand()-1;
+        if(board[rh][ch]!=0)
+        {
+            board[rh][ch]=0;
+        }
+        else
+        {
+            a--;
+        }
+
+    }
+}
 int generateboard()
 {
    diagfill();
    fillRemaining(0,3);
+   digholes();
    return 0;
 
 }
@@ -245,8 +268,10 @@ void maingame()
     {
         for( m=0;m<9;m++)
         {
+          if(board[k][m]!=0){
           sprintf(ms,"%d",board[k][m]);
           printdigit(k,m,ms[0]);
+        }
         }
     }
 }
