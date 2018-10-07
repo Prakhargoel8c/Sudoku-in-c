@@ -137,8 +137,6 @@ int fillRemaining(int i, int j)
         return 0;
     }
 
-
-
 void boxfill(int row,int col)
 {
     int num,i,j;
@@ -168,8 +166,8 @@ void diagfill()
 }
 void digholes()
 {
-    int a,rh,ch;
-    for(a=0;a<=17;a++)
+    int a,rh,ch,i=17;
+    for(a=0;a<=i;a++)
     {
         rh=genrand()-1;
         ch=genrand()-1;
@@ -187,12 +185,11 @@ void digholes()
 int generateboard()
 {
    diagfill();
-   fillRemaining(0,3);
+   fillRemaining(0,SRN);
    digholes();
    return 0;
 
 }
-
 void renderbitmap(double x,double y,void *font ,char d)
 {
     glRasterPos2d(x,y);
@@ -282,7 +279,6 @@ void display()
  maingame();
  glFlush();
 }
-
 void mouse1(int button,int state,int x,int y)
 {
 
@@ -324,4 +320,3 @@ glutMouseFunc(mouse1);
  glutMainLoop();
  return 0;
 }
-
