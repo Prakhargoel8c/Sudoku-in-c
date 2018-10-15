@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
-float row_sel=-2;
+#include<math.h>
+int row_sel=-2;
 int i,j,SRN=3,k,m,N=9;
 
 char ms[5];
@@ -27,7 +28,7 @@ int boardset1[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0};
-float col_sel=-2;
+int col_sel=-2;
 int genrand()
 {
 
@@ -302,6 +303,49 @@ void menu(int id)
 
      }
   }
+  void keyboard(unsigned char key,int x,int y)
+  {
+      int rowk=row_sel;
+      int colk=col_sel;
+
+      if(key=='1')
+      {
+          board[rowk][colk]=1;
+      }
+      else if(key=='2')
+      {
+          board[rowk][colk]=2;
+      }
+      else if(key=='3')
+      {
+          board[rowk][colk]=3;
+      }
+      else if(key=='4')
+      {
+          board[rowk][colk]=4;
+      }
+      else if(key=='5')
+      {
+          board[rowk][colk]=5;
+      }
+      else if(key=='6')
+      {
+          board[rowk][colk]=6;
+      }
+      else if(key=='7')
+      {
+          board[rowk][colk]=7;
+      }
+      else if(key=='8')
+      {
+          board[rowk][colk]=8;
+      }
+      if(key=='9')
+      {
+          board[rowk][colk]=9;
+      }
+      glutPostRedisplay();
+  }
 int main(int argc,char** argv)
 {
  srand(time(0));
@@ -317,6 +361,7 @@ glutAddMenuEntry("Tutorial",1);
 glutAddMenuEntry("Game",2);
 glutAttachMenu(GLUT_RIGHT_BUTTON);
 glutMouseFunc(mouse1);
+glutKeyboardFunc(keyboard);
  glutMainLoop();
  return 0;
 }
