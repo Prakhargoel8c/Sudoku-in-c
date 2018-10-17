@@ -129,6 +129,7 @@ int fillRemaining(int i, int j)
             if (CheckIfSafe(i, j, num)==3)
             {
                 board[i][j] = num;
+                boardset1[i][j]=num;
                 if (fillRemaining(i, j+1))
                     return 1;
 
@@ -175,6 +176,7 @@ void digholes()
         if(board[rh][ch]!=0)
         {
             board[rh][ch]=0;
+            boardset1[rh][ch]=0;
         }
         else
         {
@@ -307,8 +309,8 @@ void menu(int id)
   {
       int rowk=row_sel;
       int colk=col_sel;
-
-      if(key=='1')
+      if(boardset1[rowk][colk]==0)
+      {if(key=='1')
       {
           board[rowk][colk]=1;
       }
@@ -340,9 +342,10 @@ void menu(int id)
       {
           board[rowk][colk]=8;
       }
-      if(key=='9')
+      else if(key=='9')
       {
           board[rowk][colk]=9;
+      }
       }
       glutPostRedisplay();
   }
