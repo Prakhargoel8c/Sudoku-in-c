@@ -29,6 +29,10 @@ int boardset1[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0};
 int col_sel=-2;
+int roundNo(float num)
+{
+    return num < 0 ? num - 0.5 : num + 0.5;
+}
 int genrand()
 {
 
@@ -200,10 +204,21 @@ void renderbitmap(double x,double y,void *font ,char d)
 }
 void printdigit(float row,float col,int c)
 {
-    double x=row*2/9-1+0.081;
+    int row1=roundNo(row);
+    int col1=roundNo(col);
+    if(boardset1[row1][col1]!=0)
+    {double x=row*2/9-1+0.081;
+    double y=1-(col+1)*2/9+0.098;
+    glColor3f(255.0f, .0f, .0f);
+    renderbitmap(x,y,GLUT_BITMAP_TIMES_ROMAN_24,c);
+    }
+    else
+    {
+        double x=row*2/9-1+0.081;
     double y=1-(col+1)*2/9+0.098;
     glColor3f(.0f, .0f, .0f);
     renderbitmap(x,y,GLUT_BITMAP_TIMES_ROMAN_24,c);
+    }
 
 }
 void maingame()
