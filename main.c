@@ -7,7 +7,6 @@
 #include<math.h>
 int row_sel=-2;
 int i,j,SRN=3,k,m,N=9;
-
 char ms[5];
 int board[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
@@ -364,6 +363,40 @@ void menu(int id)
       }
       glutPostRedisplay();
   }
+void SpecialKeys(int key, int x, int y)
+{
+    switch (key)
+	{
+		case GLUT_KEY_LEFT:
+		    if(row_sel!=0)
+		{
+		    row_sel=row_sel-1;
+		}
+		glutPostRedisplay();
+			break;
+		case GLUT_KEY_RIGHT:
+		  if(row_sel!=8)
+		{
+		    row_sel=row_sel+1;
+		}
+		glutPostRedisplay();
+			break;
+		case GLUT_KEY_UP:
+		    if(col_sel!=0)
+	        {
+	            col_sel=col_sel-1;
+	        }
+	        glutPostRedisplay();
+			break;
+		case GLUT_KEY_DOWN:
+		if(col_sel!=8)
+	        {
+	            col_sel=col_sel+1;
+	        }
+		glutPostRedisplay();
+			break;
+	}
+}
 int main(int argc,char** argv)
 {
  srand(time(0));
@@ -380,6 +413,7 @@ glutAddMenuEntry("Game",2);
 glutAttachMenu(GLUT_RIGHT_BUTTON);
 glutMouseFunc(mouse1);
 glutKeyboardFunc(keyboard);
+glutSpecialFunc(SpecialKeys);
  glutMainLoop();
  return 0;
 }
