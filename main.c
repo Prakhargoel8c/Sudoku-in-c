@@ -190,9 +190,16 @@ void digholes()
 }
 int generateboard()
 {
+    clock_t t1=clock();
+        clock_t t2;
+double timetaken;
    diagfill();
    fillRemaining(0,SRN);
    digholes();
+   t2=clock();
+   t1=t2-t1;
+   timetaken=(((double)t1)/CLOCKS_PER_SEC);
+   printf("%lf",timetaken);
    return 0;
 
 }
