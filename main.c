@@ -94,52 +94,110 @@ int CheckIfSafe(int a,int b,int num)
                 numboxsafe(a-a%SRN, b-b%SRN, num);
         return (res);
     }
-
-int fillRemaining(int i, int j)
+int reigon(int i)
+{
+    int j=i/9;
+    if(j==0||j==1||j==2||j==9||j==10||j==11||j==18||j==19||j==20)
     {
-        int num;
-        if (j>=N && i<N-1)
-        {
-            i = i + 1;
-            j = 0;
-        }
-        if (i>=N && j>=N)
-            return 1;
+        j=0;
+    }
+    else if(j==3||j==4||j==5||j==12||j==13||j==14||j==21||j==22||j==23)
+    {
+        j=1;
+    }
+    else if(j==6||j==7||j==9||j==15||j==16||j==17||j==24||j==25||j==26)
+    {
+        j=2;
+    }
+    else if(j==27||j==28||j==29||j==36||j==37||j==38||j==45||j==46||j==47)
+    {
+        j=3;
+    }
+    else if(j==30||j==31||j==32||j==39||j==40||j==41||j==48||j==49||j==50)
+    {
+        j=4;
+    }
+    else if(j==33||j==34||j==35||j==42||j==43||j==44||j==51||j==52||j==53)
+    {
+        j=5;
+    }
+    else if(j==54||j==55||j==56||j==63||j==64||j==65||j==72||j==73||j==74)
+    {
+        j=6;
+    }
+    else if(j==57||j==58||j==59||j==66||j==67||j==68||j==75||j==76||j==77)
+    {
+        j=7;
+    }
+    else if(j==60||j==61||j==62||j==69||j==70||j==71||j==78||j==79||j==80)
+    {
+        j=8;
+    }
 
-        if (i < SRN)
+
+    return j;
+}
+
+int fillRemaining()
+    {
+        int orgboard[9][9];
+        int exsol[729][324];
+        int sol[9][9];
+        int i,j,q,k;
+        for(i=0;i<9;i++)
         {
-            if (j < SRN)
-                j = SRN;
-        }
-        else if (i < N-SRN)
-        {
-            if (j==(int)(i/SRN)*SRN)
-                j =  j + SRN;
-        }
-        else
-        {
-            if (j == N-SRN)
+            for(j=0;j<9;j++)
             {
-                i = i + 1;
-                j = 0;
-                if (i>=N)
-                    return 1;
+                orgboard[i][j]=board[i][j];
             }
         }
-
-        for ( num = 1; num<=N; num++)
+        for(i=0;i<729;i++)
         {
-            if (CheckIfSafe(i, j, num)==3)
+            for(j=0;j<324;j++)
             {
-                board[i][j] = num;
-                boardset1[i][j]=num;
-                if (fillRemaining(i, j+1))
-                    return 1;
-
-                board[i][j] = 0;
+                exsol[i][j]=0;
             }
         }
-        return 0;
+        j=0;
+        for(i=0;i<729;i++)//cell constraint
+        {
+           for(q=0;q<9;q++)
+           {
+               exsol[i++][j]=1;
+               }
+               j++;
+        }
+        j=81;
+        for(i=0;i<729;i++)//row constraint
+        {
+            if(i%81!=0)
+            {
+                j=81;
+            }
+            for(q=0;q<9;q++)
+            {
+                exsol[i++][j++]=1;
+            }
+        }
+        j=162;
+        q=0;
+        for(i=0;i<729;i++)//column constraint
+        {
+            j=162;
+            for(q=0;q<80;q++)
+            {
+                exsol[i++][j++]=1;
+            }
+            exsol[i][j]=1;
+        }
+        j=243;
+        for(i=0;i<729;i++)//box constraint
+        {
+           j=243+9*reigon(i);
+
+
+        }
+
     }
 
 void boxfill(int row,int col)
@@ -195,12 +253,16 @@ int generateboard()
 double timetaken;
    diagfill();
    fillRemaining(0,SRN);
-   digholes();
+   //digholes();
    t2=clock();
    t1=t2-t1;
    timetaken=(((double)t1)/CLOCKS_PER_SEC);
    printf("%lf",timetaken);
    return 0;
+
+}
+void check()
+{
 
 }
 void renderbitmap(double x,double y,void *font ,char d)
@@ -257,6 +319,7 @@ void maingame()
 
 	glVertex2f(-1, -l);
 	glVertex2f( 1, -l);
+
 	glVertex2f(-1,  l);
 	glVertex2f( 1,  l);
 
@@ -265,6 +328,7 @@ void maingame()
 
 	glVertex2f( l,  1);
 	glVertex2f( l, -1);
+
 	if(row_sel!=-2&& col_sel!=-2)
     {
         glColor3f(255.0f, .0f, .0f);
@@ -313,6 +377,7 @@ void mouse1(int button,int state,int x,int y)
         }
 
     glutPostRedisplay();
+
 }
 void menu(int id)
 {
@@ -367,6 +432,10 @@ void menu(int id)
       {
           board[rowk][colk]=9;
       }
+      else if(key=='=')
+      {
+          check();
+      }
       }
       glutPostRedisplay();
   }
@@ -412,7 +481,7 @@ int main(int argc,char** argv)
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
  glutInitWindowSize(500,500);
  glutInitWindowPosition(200,200);
- glutCreateWindow("sudokonew");
+ glutCreateWindow("Sudoku");
  glutDisplayFunc(display);
  glutCreateMenu(menu);
 glutAddMenuEntry("Tutorial",1);

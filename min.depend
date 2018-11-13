@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1540539364 source:c:\users\rocki\documents\min\main.c
+1541342912 source:c:\users\rocki\documents\min\main.c
 	<windows.h>
 	<gl/gl.h>
 	<GL/glut.h>
