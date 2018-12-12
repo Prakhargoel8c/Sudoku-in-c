@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1541342912 source:c:\users\rocki\documents\min\main.c
+1544633497 source:c:\users\rocki\documents\min\main.c
 	<windows.h>
 	<gl/gl.h>
 	<GL/glut.h>
@@ -7,4 +7,15 @@
 	<stdlib.h>
 	<time.h>
 	<math.h>
+
+1542990944 source:c:\users\rocki\documents\min\src\soduku.c
+	"Soduku.h"
+
+1542990880 c:\users\rocki\documents\min\include\soduku.h
+	<stdio.h>
+	<string.h>
+
+1544632955 source:c:\users\rocki\documents\min\soduku.c
+	<stdio.h>
+	<string.h>
 
