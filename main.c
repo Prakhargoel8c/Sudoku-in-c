@@ -5,9 +5,20 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
+int** driver(int num[9][9]);
+int data(int,int);
+int **z;
 int row_sel=-2;
-int i,j,SRN=3,k,m,N=9;
+int i,j,SRN=3,k,m,N=9,s=0;
 char ms[5];
+int orgboard[81];
+int currentsolution[81];
+int rleft[729];
+int cleft[324];
+int exsol[729][324];
+int sol[81];
+int rselected[729];
+int colselected[324];
 int board[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
@@ -94,52 +105,20 @@ int CheckIfSafe(int a,int b,int num)
                 numboxsafe(a-a%SRN, b-b%SRN, num);
         return (res);
     }
-
-int fillRemaining(int i, int j)
+int fillRemaining()
     {
-        int num;
-        if (j>=N && i<N-1)
+        driver(board);
+        for(i=0;i<9;i++)
         {
-            i = i + 1;
-            j = 0;
-        }
-        if (i>=N && j>=N)
-            return 1;
-
-        if (i < SRN)
-        {
-            if (j < SRN)
-                j = SRN;
-        }
-        else if (i < N-SRN)
-        {
-            if (j==(int)(i/SRN)*SRN)
-                j =  j + SRN;
-        }
-        else
-        {
-            if (j == N-SRN)
+            for(j=0;j<9;j++)
             {
-                i = i + 1;
-                j = 0;
-                if (i>=N)
-                    return 1;
+                board[i][j]=data(i,j);
+                boardset1[i][j]=data(i,j);
             }
         }
+        board[5][0]=7;
+        boardset1[5][0]=7;
 
-        for ( num = 1; num<=N; num++)
-        {
-            if (CheckIfSafe(i, j, num)==3)
-            {
-                board[i][j] = num;
-                boardset1[i][j]=num;
-                if (fillRemaining(i, j+1))
-                    return 1;
-
-                board[i][j] = 0;
-            }
-        }
-        return 0;
     }
 
 void boxfill(int row,int col)
@@ -203,6 +182,10 @@ double timetaken;
    return 0;
 
 }
+void check()
+{
+
+}
 void renderbitmap(double x,double y,void *font ,char d)
 {
     glRasterPos2d(x,y);
@@ -257,6 +240,7 @@ void maingame()
 
 	glVertex2f(-1, -l);
 	glVertex2f( 1, -l);
+
 	glVertex2f(-1,  l);
 	glVertex2f( 1,  l);
 
@@ -265,6 +249,7 @@ void maingame()
 
 	glVertex2f( l,  1);
 	glVertex2f( l, -1);
+
 	if(row_sel!=-2&& col_sel!=-2)
     {
         glColor3f(255.0f, .0f, .0f);
@@ -313,6 +298,7 @@ void mouse1(int button,int state,int x,int y)
         }
 
     glutPostRedisplay();
+
 }
 void menu(int id)
 {
@@ -367,6 +353,10 @@ void menu(int id)
       {
           board[rowk][colk]=9;
       }
+      else if(key=='=')
+      {
+          check();
+      }
       }
       glutPostRedisplay();
   }
@@ -412,7 +402,7 @@ int main(int argc,char** argv)
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
  glutInitWindowSize(500,500);
  glutInitWindowPosition(200,200);
- glutCreateWindow("sudokonew");
+ glutCreateWindow("Sudoku");
  glutDisplayFunc(display);
  glutCreateMenu(menu);
 glutAddMenuEntry("Tutorial",1);
