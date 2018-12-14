@@ -7,18 +7,19 @@
 #include<math.h>
 int** driver(int num[9][9]);
 int data(int,int);
-int **z;
+int main1(int a[9][9]);
+//int **z;
 int row_sel=-2;
 int i,j,SRN=3,k,m,N=9,s=0;
 char ms[5];
 int orgboard[81];
 int currentsolution[81];
-int rleft[729];
-int cleft[324];
-int exsol[729][324];
-int sol[81];
-int rselected[729];
-int colselected[324];
+//int rleft[729];
+//int cleft[324];
+//int exsol[729][324];
+//int sol[81];
+//int rselected[729];
+//int colselected[324];
 int board[9][9]={0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
                   0,0,0,0,0,0,0,0,0,
@@ -116,9 +117,6 @@ int fillRemaining()
                 boardset1[i][j]=data(i,j);
             }
         }
-        board[5][0]=7;
-        boardset1[5][0]=7;
-
     }
 
 void boxfill(int row,int col)
@@ -184,7 +182,7 @@ double timetaken;
 }
 void check()
 {
-
+ main1(board);
 }
 void renderbitmap(double x,double y,void *font ,char d)
 {

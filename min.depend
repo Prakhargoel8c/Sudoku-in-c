@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1544633497 source:c:\users\rocki\documents\min\main.c
+1544811254 source:c:\users\rocki\documents\min\main.c
 	<windows.h>
 	<gl/gl.h>
 	<GL/glut.h>
@@ -15,7 +15,10 @@
 	<stdio.h>
 	<string.h>
 
-1544632955 source:c:\users\rocki\documents\min\soduku.c
+1544809993 source:c:\users\rocki\documents\min\soduku.c
 	<stdio.h>
 	<string.h>
+
+1544811570 source:c:\users\rocki\documents\min\check.c
+	<stdio.h>
 

@@ -6,6 +6,7 @@
 #define RW_OFFSET 81
 #define CL_OFFSET 162
 #define BX_OFFSET 243
+int main1(int a[9][9]);
 
 struct str_node {
 
@@ -249,7 +250,7 @@ void BuildData(void) {
 	int a, b, c;
 	int Index;
 	nCol = 4 * 9 * 9;
-	nRow = 9 * 9 * 9 + 1;
+	nRow = 9 * 9 * 9;
 	for (a = 0; a < 9; a++) {
 		for (b = 0; b < 9; b++) {
 			for (c = 0; c < 9; c++) {
