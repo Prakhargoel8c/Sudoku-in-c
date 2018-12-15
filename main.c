@@ -7,7 +7,10 @@
 #include<math.h>
 int** driver(int num[9][9]);
 int data(int,int);
-int main1(int a[9][9]);
+int checkifValid(int a[9][9]);
+int checkok(int i);
+int holeeasy(int i,int j);
+int easy();
 //int **z;
 int row_sel=-2;
 int i,j,SRN=3,k,m,N=9,s=0;
@@ -74,7 +77,7 @@ int numboxsafe(int row,int col,int num)
  }
  return flag;
 }
-int numrowsafe(int row,int num)
+/*int numrowsafe(int row,int num)
 {
     int flag=1;
     for(i=0;i<9;i++)
@@ -105,16 +108,16 @@ int CheckIfSafe(int a,int b,int num)
                 numcolsafe(b, num) +
                 numboxsafe(a-a%SRN, b-b%SRN, num);
         return (res);
-    }
-int fillRemaining()
+    }*/
+void fillRemaining()
     {
         driver(board);
         for(i=0;i<9;i++)
         {
             for(j=0;j<9;j++)
             {
-                board[i][j]=data(i,j);
-                boardset1[i][j]=data(i,j);
+                board[i][j]=data(j,i);
+                boardset1[i][j]=data(j,i);
             }
         }
     }
@@ -148,8 +151,10 @@ void diagfill()
 }
 void digholes()
 {
-    int a,rh,ch,i=17;
-    for(a=0;a<=i;a++)
+    int i,j;
+    //int a,rh,ch,i=17;
+    easy();
+    /*for(a=0;a<=i;a++)
     {
         rh=genrand()-1;
         ch=genrand()-1;
@@ -163,6 +168,17 @@ void digholes()
             a--;
         }
 
+    }*/
+    for(i=0;i<9;i++)
+    {
+        for(j=0;j<9;j++)
+        {
+           if(holeeasy(i,j)==1)
+        {
+            board[i][j]=0;
+            boardset1[i][j]=0;
+        }
+        }
     }
 }
 int generateboard()
@@ -182,7 +198,7 @@ double timetaken;
 }
 void check()
 {
- main1(board);
+ checkifValid(board);
 }
 void renderbitmap(double x,double y,void *font ,char d)
 {

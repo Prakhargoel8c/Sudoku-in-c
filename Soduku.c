@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#define MAX_COL 1100
-#define MAX_ROW 4100
-#define SQ_OFFSET 0
-#define RW_OFFSET 81
-#define CL_OFFSET 162
-#define BX_OFFSET 243
-int main1(int a[9][9]);
+#define MAX_COL 324
+#define MAX_ROW 729
+#define SQUARE_OFFSET 0
+#define ROW_OFFSET 81
+#define COLUMN_OFFSET 162
+#define BOX_OFFSET 243
+int checkifValid(int a[9][9]);
 
 struct str_node {
 
@@ -24,8 +24,8 @@ struct str_node {
 	static int Sodoku[9][9] = { };
 
 
-int nCol;int board[9][9];
-int nRow;
+int tcol;int board[9][9];
+int tRow;
 struct str_node Matrix[MAX_COL][MAX_ROW];
 struct str_node Root;
 struct str_node *RootNode = &Root;
@@ -38,23 +38,23 @@ int GlobalProgressUpdate;
 int MaxK;
 // --> Initialisation functions
 int dataLeft(int i) {
-	return i - 1 < 0 ? nCol - 1 : i - 1;
+	return i - 1 < 0 ? tcol - 1 : i - 1;
 }
  int dataRight(int i) {
-	return (i + 1) % nCol;
+	return (i + 1) % tcol;
 }
  int dataUp(int i) {
-	return i - 1 < 0 ? nRow - 1 : i - 1;
+	return i - 1 < 0 ? tRow - 1 : i - 1;
 }
  int dataDown(int i) {
-	return (i + 1) % nRow;
+	return (i + 1) % tRow;
 }
 
 void CreateMatrix(void) {
 	int a, b, i, j;
 	//Build toroidal linklist matrix according to data bitmap
-	for (a = 0; a < nCol; a++) {
-		for (b = 0; b < nRow; b++) {
+	for (a = 0; a < tcol; a++) {
+		for (b = 0; b < tRow; b++) {
 			if (Data[a][b] != 0) {
 				// Left pointer
 				i = a;
@@ -85,23 +85,23 @@ void CreateMatrix(void) {
 				} while (Data[i][j] == 0);
 				Matrix[a][b].Down = &Matrix[i][j];
 				// Header pointer
-				Matrix[a][b].Header = &Matrix[a][nRow - 1];
+				Matrix[a][b].Header = &Matrix[a][tRow - 1];
 				Matrix[a][b].IDNum = b;
 				//Row Header
 				RowHeader[b] = &Matrix[a][b];
 			}
 		}
 	}
-	for (a = 0; a < nCol; a++) {
-		Matrix[a][nRow - 1].IDName = 'C';
-		Matrix[a][nRow - 1].IDNum = a;
+	for (a = 0; a < tcol; a++) {
+		Matrix[a][tRow - 1].IDName = 'C';
+		Matrix[a][tRow - 1].IDNum = a;
 	}
 	//Insert root
 	Root.IDName = 'R';
-	Root.Left = &Matrix[nCol - 1][nRow - 1];
-	Root.Right = &Matrix[0][nRow - 1];
-	Matrix[nCol - 1][nRow - 1].Right = &Root;
-	Matrix[0][nRow - 1].Left = &Root;
+	Root.Left = &Matrix[tcol - 1][tRow - 1];
+	Root.Right = &Matrix[0][tRow - 1];
+	Matrix[tcol - 1][tRow - 1].Right = &Root;
+	Matrix[0][tRow - 1].Left = &Root;
 }
 
 // --> DLX Algorithm functions
@@ -148,7 +148,7 @@ void UnCover(struct str_node *ColNode) {
 	ColNode->Left->Right = ColNode;
 }
 
-void SolutionRow(struct str_node *RowNode) {
+void SolutiotRow(struct str_node *RowNode) {
 	Cover(RowNode->Header);
 	struct str_node *RightNode;
 	for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
@@ -249,43 +249,43 @@ int data(int i,int j)
 void BuildData(void) {
 	int a, b, c;
 	int Index;
-	nCol = 4 * 9 * 9;
-	nRow = 9 * 9 * 9;
+	tcol = 4 * 9 * 9;
+	tRow = 9 * 9 * 9;
 	for (a = 0; a < 9; a++) {
 		for (b = 0; b < 9; b++) {
 			for (c = 0; c < 9; c++) {
 				Index = getIn(c, a, b);
-				Data[SQ_OFFSET + retSq(Index)][Index] = 1; //Constraint 1: Only 1 per square
-				Data[RW_OFFSET + retRn(Index)][Index] = 1; //Constraint 2: Only 1 of per number per Row
-				Data[CL_OFFSET + retCn(Index)][Index] = 1; //Constraint 3: Only 1 of per number per Column
-				Data[BX_OFFSET + retBn(Index)][Index] = 1; //Constraint 4: Only 1 of per number per Box
+				Data[SQUARE_OFFSET + retSq(Index)][Index] = 1; //Constraint 1: Only 1 per square
+				Data[ROW_OFFSET + retRn(Index)][Index] = 1; //Constraint 2: Only 1 of per number per Row
+				Data[COLUMN_OFFSET + retCn(Index)][Index] = 1; //Constraint 3: Only 1 of per number per Column
+				Data[BOX_OFFSET + retBn(Index)][Index] = 1; //Constraint 4: Only 1 of per number per Box
 			}
 		}
 	}
-	for (a = 0; a < nCol; a++) {
-		Data[a][nRow - 1] = 2;
+	for (a = 0; a < tcol; a++) {
+		Data[a][tRow - 1] = 2;
 	}
 	CreateMatrix();
-	for (a = 0; a < RW_OFFSET; a++) {
-		Matrix[a][nRow - 1].IDName = 'S';
-		Matrix[a][nRow - 1].IDNum = a;
+	for (a = 0; a < ROW_OFFSET; a++) {
+		Matrix[a][tRow - 1].IDName = 'S';
+		Matrix[a][tRow - 1].IDNum = a;
 	}
-	for (a = RW_OFFSET; a < CL_OFFSET; a++) {
-		Matrix[a][nRow - 1].IDName = 'R';
-		Matrix[a][nRow - 1].IDNum = a - RW_OFFSET;
+	for (a = ROW_OFFSET; a < COLUMN_OFFSET; a++) {
+		Matrix[a][tRow - 1].IDName = 'R';
+		Matrix[a][tRow - 1].IDNum = a - ROW_OFFSET;
 	}
-	for (a = CL_OFFSET; a < BX_OFFSET; a++) {
-		Matrix[a][nRow - 1].IDName = 'C';
-		Matrix[a][nRow - 1].IDNum = a - CL_OFFSET;
+	for (a = COLUMN_OFFSET; a < BOX_OFFSET; a++) {
+		Matrix[a][tRow - 1].IDName = 'C';
+		Matrix[a][tRow - 1].IDNum = a - COLUMN_OFFSET;
 	}
-	for (a = BX_OFFSET; a < nCol; a++) {
-		Matrix[a][nRow - 1].IDName = 'B';
-		Matrix[a][nRow - 1].IDNum = a - BX_OFFSET;
+	for (a = BOX_OFFSET; a < tcol; a++) {
+		Matrix[a][tRow - 1].IDName = 'B';
+		Matrix[a][tRow - 1].IDNum = a - BOX_OFFSET;
 	}
 }
 
 void AddNumber(int N, int R, int C) {
-	SolutionRow(RowHeader[getIn(N, R, C)]);
+	SolutiotRow(RowHeader[getIn(N, R, C)]);
 	MaxK++;
 	Result[nResult++] = getIn(N, R, C);
 }

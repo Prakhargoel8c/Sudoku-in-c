@@ -44,6 +44,9 @@
 		<Unit filename="Soduku.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="check.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
