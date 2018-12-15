@@ -5,12 +5,16 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
+int level();
 int** driver(int num[9][9]);
 int data(int,int);
 int checkifValid(int a[9][9]);
 int checkok(int i);
 int holeeasy(int i,int j);
 int easy();
+int lev;
+int eeasy();
+int holeeeasy(int i,int j);
 //int **z;
 int row_sel=-2;
 int i,j,SRN=3,k,m,N=9,s=0;
@@ -153,7 +157,6 @@ void digholes()
 {
     int i,j;
     //int a,rh,ch,i=17;
-    easy();
     /*for(a=0;a<=i;a++)
     {
         rh=genrand()-1;
@@ -169,7 +172,11 @@ void digholes()
         }
 
     }*/
-    for(i=0;i<9;i++)
+    switch(lev)
+    {case 1:
+    {
+        easy();
+        for(i=0;i<9;i++)
     {
         for(j=0;j<9;j++)
         {
@@ -178,6 +185,23 @@ void digholes()
             board[i][j]=0;
             boardset1[i][j]=0;
         }
+        }
+    }
+    break;
+    }
+    case 0:
+    {
+        eeasy();
+        for(i=0;i<9;i++)
+        for(j=0;j<9;j++)
+        {
+           if(holeeeasy(i,j)==1)
+        {
+            board[i][j]=0;
+            boardset1[i][j]=0;
+        }
+        }
+          break;
         }
     }
 }
@@ -411,6 +435,7 @@ void SpecialKeys(int key, int x, int y)
 int main(int argc,char** argv)
 {
  srand(time(0));
+ lev=level();
  generateboard();
  glutInit(&argc,argv);
  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);

@@ -8,14 +8,14 @@
 #define BOX_OFFSET 243
 int checkifValid(int a[9][9]);
 
-struct str_node {
+struct node {
 
-	struct str_node * Header;
+	struct node * head;
 
-	struct str_node * Left;
-	struct str_node * Right;
-	struct str_node * Up;
-	struct str_node * Down;
+	struct node * Left;
+	struct node * Right;
+	struct node * Up;
+	struct node * Down;
 
 	char IDName;
 	int IDNum;
@@ -26,10 +26,10 @@ struct str_node {
 
 int tcol;int board[9][9];
 int tRow;
-struct str_node Matrix[MAX_COL][MAX_ROW];
-struct str_node Root;
-struct str_node *RootNode = &Root;
-struct str_node *RowHeader[MAX_ROW];
+struct node Matrix[MAX_COL][MAX_ROW];
+struct node Root;
+struct node *RootNode = &Root;
+struct node *Rowhead[MAX_ROW];
 char Data[MAX_COL][MAX_ROW];
 int Result[MAX_ROW];
 int nResult = 0;
@@ -84,11 +84,11 @@ void CreateMatrix(void) {
 					j = dataDown(j);
 				} while (Data[i][j] == 0);
 				Matrix[a][b].Down = &Matrix[i][j];
-				// Header pointer
-				Matrix[a][b].Header = &Matrix[a][tRow - 1];
+				// head pointer
+				Matrix[a][b].head = &Matrix[a][tRow - 1];
 				Matrix[a][b].IDNum = b;
-				//Row Header
-				RowHeader[b] = &Matrix[a][b];
+				//Row head
+				Rowhead[b] = &Matrix[a][b];
 			}
 		}
 	}
@@ -105,16 +105,16 @@ void CreateMatrix(void) {
 }
 
 // --> DLX Algorithm functions
-int countOnes(struct str_node *c) {
-	struct str_node *r;
+int countOnes(struct node *c) {
+	struct node *r;
 	int i = 0;
 	for (r = c->Down; r != c; r = r->Down)
 		i++;
 	return i;
 }
 
-struct str_node *ChooseColumn(void) {
-	struct str_node *best, *c;
+struct node *ChooseColumn(void) {
+	struct node *best, *c;
 	int minOnes = 100000;
 	for (c = RootNode->Right; c != RootNode; c = c->Right)
 		if (minOnes > c->count)
@@ -122,37 +122,37 @@ struct str_node *ChooseColumn(void) {
 	return best;
 }
 
-void Cover(struct str_node *ColNode) {
-	struct str_node *RowNode, *RightNode;
+void Cover(struct node *ColNode) {
+	struct node *RowNode, *RightNode;
 	ColNode->Right->Left = ColNode->Left;
 	ColNode->Left->Right = ColNode->Right;
 	for (RowNode = ColNode->Down; RowNode != ColNode; RowNode = RowNode->Down) {
 		for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
 			RightNode->Up->Down = RightNode->Down;
 			RightNode->Down->Up = RightNode->Up;
-			RightNode->Header->count--;
+			RightNode->head->count--;
 		}
 	}
 }
 
-void UnCover(struct str_node *ColNode) {
-	struct str_node *RowNode, *LeftNode;
+void UnCover(struct node *ColNode) {
+	struct node *RowNode, *LeftNode;
 	for (RowNode = ColNode->Up; RowNode != ColNode; RowNode = RowNode->Up) {
 		for (LeftNode = RowNode->Left; LeftNode != RowNode; LeftNode = LeftNode->Left) {
 			LeftNode->Up->Down = LeftNode;
 			LeftNode->Down->Up = LeftNode;
-			LeftNode->Header->count++;
+			LeftNode->head->count++;
 		}
 	}
 	ColNode->Right->Left = ColNode;
 	ColNode->Left->Right = ColNode;
 }
 
-void SolutiotRow(struct str_node *RowNode) {
-	Cover(RowNode->Header);
-	struct str_node *RightNode;
+void SolutiotRow(struct node *RowNode) {
+	Cover(RowNode->head);
+	struct node *RightNode;
 	for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
-		Cover(RightNode->Header);
+		Cover(RightNode->head);
 	}
 }
 
@@ -171,23 +171,23 @@ void Search(int k) {
 		Finished = 1;
 		return;
 	}
-	struct str_node *Column = ChooseColumn();
+	struct node *Column = ChooseColumn();
 	if (Column->count == 0)
 		return;
 	Cover(Column);
 
-	struct str_node *RowNode;
-	struct str_node *RightNode;
+	struct node *RowNode;
+	struct node *RightNode;
 	for (RowNode = Column->Down; RowNode != Column && !Finished; RowNode = RowNode->Down) {
 		// Try this row node on!
 		Result[nResult++] = RowNode->IDNum;
 		for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
-			Cover(RightNode->Header);
+			Cover(RightNode->head);
 		}
 		Search(k + 1);
 		// Ok, that node didn't quite work
 		for (RightNode = RowNode->Left; RightNode != RowNode; RightNode = RightNode->Left) {
-			UnCover(RightNode->Header);
+			UnCover(RightNode->head);
 		}
 		Result[--nResult] = 0;
 	}
@@ -285,7 +285,7 @@ void BuildData(void) {
 }
 
 void AddNumber(int N, int R, int C) {
-	SolutiotRow(RowHeader[getIn(N, R, C)]);
+	SolutiotRow(Rowhead[getIn(N, R, C)]);
 	MaxK++;
 	Result[nResult++] = getIn(N, R, C);
 }
@@ -327,7 +327,7 @@ int** driver(int num[9][9]) {
 		nResult = 0;
 		BuildData();
 		LoadPuzzle(num);
-		struct str_node *r;
+		struct node *r;
 		for (r = RootNode->Right; r != RootNode; r = r->Right)
 			r->count = countOnes(r);
 		Search(0);

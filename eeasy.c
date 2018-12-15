@@ -1,7 +1,7 @@
 #include<stdio.h>
 int genrand();
 int hole[9][9];
-int checkok(int i)
+int checkokee(int i)
 {
     int j,flag1=0;
     for(j=0;j<9;j++)
@@ -21,8 +21,8 @@ int checkok(int i)
        }
 
 }
-int easy()
-{   int i=9*9-45,j,k,loc;
+int eeasy()
+{   int i=9*9-60,j,k,loc;
     //int l;
     for(j=0;j<9;j++)
         for(k=0;k<9;k++)
@@ -31,9 +31,9 @@ int easy()
     }
     for(j=0;j<9;j++)
     {
-        for(k=0;k<5;k++)
+        for(k=0;k<3;k++)
         {
-            if(i>0&&checkok(k))
+            if(i>0&&checkokee(k))
             {
                 loc=genrand();
                 i--;
@@ -53,10 +53,11 @@ int easy()
         for(k=0;k<9;k++)
     {
         printf("%d ,",hole[j][k]);
-    }
-    return 0;*/
+    }*/
+    return 0;
 }
-int holeeasy(int i,int j)
+int holeeeasy(int i,int j)
 {
     return(hole[j][i]);
 }
+
