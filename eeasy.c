@@ -4,34 +4,37 @@ int hole[9][9];
 int checkokee(int i)
 {
     int j,flag1=0;
-    for(j=0;j<9;j++)
+    for(j=0; j<9; j++)
     {
-       if(hole[i][j]==1)
-       {
-           flag1++;
-       }
+        if(hole[i][j]==1)
+        {
+            flag1++;
+        }
     }
-       if(flag1>5)
-       {
-           return 0;
-       }
-       else
-       {
-           return 1;
-       }
+    if(flag1>5)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 
 }
 int eeasy()
-{   int i=9*9-60,j,k,loc;
+{
+    int i=9*9-60;
+    //int i=1;
+    int j,k,loc;
     //int l;
-    for(j=0;j<9;j++)
-        for(k=0;k<9;k++)
+    for(j=0; j<9; j++)
+        for(k=0; k<9; k++)
+        {
+            hole[i][j]=0;
+        }
+    for(j=0; j<9; j++)
     {
-        hole[i][j]=0;
-    }
-    for(j=0;j<9;j++)
-    {
-        for(k=0;k<3;k++)
+        for(k=0; k<3; k++)
         {
             if(i>0&&checkokee(k))
             {

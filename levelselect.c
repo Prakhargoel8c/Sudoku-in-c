@@ -1,7 +1,10 @@
+#include<stdio.h>
+int writefile(int i);
 int level()
 {
-    float result;
-    int choice, num;
+    //float result;
+    int choice;
+    //int num;
     printf("Press 1 to for easy\n");
     printf("Press 2 to for medium \n");
     printf("Press 3 to for hard\n");
@@ -9,17 +12,22 @@ int level()
     printf("Press 0 to for extremely easy \n");
     printf("Enter your choice:\n");
     scanf("%d",&choice);
-    switch (choice) {
-    case 1: {
+    switch (choice)
+    {
+    case 1:
+    {
         return 1;
     }
-    case 2: {
+    case 2:
+    {
         return 2;
     }
-    case 3: {
+    case 3:
+    {
         return 3;
     }
-    case 0: {
+    case 0:
+    {
         return 0;
     }
 

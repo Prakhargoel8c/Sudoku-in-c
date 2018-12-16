@@ -4,34 +4,35 @@ int hole[9][9];
 int checkok(int i)
 {
     int j,flag1=0;
-    for(j=0;j<9;j++)
+    for(j=0; j<9; j++)
     {
-       if(hole[i][j]==1)
-       {
-           flag1++;
-       }
+        if(hole[i][j]==1)
+        {
+            flag1++;
+        }
     }
-       if(flag1>5)
-       {
-           return 0;
-       }
-       else
-       {
-           return 1;
-       }
+    if(flag1>5)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 
 }
 int easy()
-{   int i=9*9-45,j,k,loc;
+{
+    int i=9*9-45,j,k,loc;
     //int l;
-    for(j=0;j<9;j++)
-        for(k=0;k<9;k++)
+    for(j=0; j<9; j++)
+        for(k=0; k<9; k++)
+        {
+            hole[i][j]=0;
+        }
+    for(j=0; j<9; j++)
     {
-        hole[i][j]=0;
-    }
-    for(j=0;j<9;j++)
-    {
-        for(k=0;k<5;k++)
+        for(k=0; k<5; k++)
         {
             if(i>0&&checkok(k))
             {
@@ -53,8 +54,8 @@ int easy()
         for(k=0;k<9;k++)
     {
         printf("%d ,",hole[j][k]);
-    }
-    return 0;*/
+    }*/
+    return 0;
 }
 int holeeasy(int i,int j)
 {

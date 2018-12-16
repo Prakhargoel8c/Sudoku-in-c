@@ -47,9 +47,22 @@
 		<Unit filename="check.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="easy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="eeasy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="levelselect.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="maingame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="min.txt" />
 		<Extensions>
 			<code_completion />
 			<envvars />
