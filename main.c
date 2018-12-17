@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
+int hard();
+int holehard(int i,int j);
+int holeehard(int i,int j);
+int ehard();
+int medium();
+int holemedium(int i,int j);
 int writefile(int i);
 int level();
 int** driver(int num[9][9]);
@@ -209,6 +215,48 @@ void digholes()
             }
         break;
     }
+    case 2:
+    {
+        medium();
+        for(i=0; i<9; i++)
+            for(j=0; j<9; j++)
+            {
+                if(holemedium(i,j)==1)
+                {
+                    board[i][j]=0;
+                    boardset1[i][j]=0;
+                }
+            }
+        break;
+    }
+    case 3:
+    {
+        hard();
+        for(i=0; i<9; i++)
+            for(j=0; j<9; j++)
+            {
+                if(holehard(i,j)==1)
+                {
+                    board[i][j]=0;
+                    boardset1[i][j]=0;
+                }
+            }
+        break;
+    }
+    case 4:
+    {
+        ehard();
+        for(i=0; i<9; i++)
+            for(j=0; j<9; j++)
+            {
+                if(holeehard(i,j)==1)
+                {
+                    board[i][j]=0;
+                    boardset1[i][j]=0;
+                }
+            }
+        break;
+    }
     }
 }
 int generateboard()
@@ -353,9 +401,13 @@ void menu(int id)
     switch(id)
     {
     case 1:
+            MessageBox(0,"The rules of the game are simple: each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column or box.", "Sudoku", MB_OK );
+
         break;
 
     case 2:
+        MessageBox(0,"Use arrow keys or left click to select tiles.Use 1-9 keys to enter values.Use = to check solution ", "Sudoku", MB_OK );
+
         break;
 
     }
@@ -408,7 +460,7 @@ void keyboard(unsigned char key,int x,int y)
             i=check();
             if(i==1)
             {
-                if(lev<=4)
+                if(lev<=20)
                 {
                     lev=lev+1;
                 }
@@ -465,7 +517,7 @@ int main(int argc,char** argv)
     glutDisplayFunc(display);
     glutCreateMenu(menu);
     glutAddMenuEntry("Tutorial",1);
-    glutAddMenuEntry("Game",2);
+    glutAddMenuEntry("Controls",2);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     glutMouseFunc(mouse1);
     glutKeyboardFunc(keyboard);

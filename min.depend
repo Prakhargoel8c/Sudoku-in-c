@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1544970012 source:c:\users\rocki\documents\min\main.c
+1544985915 source:c:\users\rocki\documents\min\main.c
 	<windows.h>
 	<gl/gl.h>
 	<GL/glut.h>
@@ -23,7 +23,7 @@
 	<stdio.h>
 	<windows.h>
 
-1544960219 source:c:\users\rocki\documents\min\easy.c
+1544970931 source:c:\users\rocki\documents\min\easy.c
 	<stdio.h>
 
 1544958243 source:c:\users\rocki\documents\min\eeasy.c
@@ -39,4 +39,13 @@
 1544969771 source:c:\users\rocki\documents\min\readfile.c
 	<stdio.h>
 	<string.h>
+
+1544970929 source:c:\users\rocki\documents\min\medium.c
+	<stdio.h>
+
+1544971886 source:c:\users\rocki\documents\min\ehard.c
+	<stdio.h>
+
+1544971212 source:c:\users\rocki\documents\min\hard.c
+	<stdio.h>
 
