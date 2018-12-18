@@ -3,9 +3,10 @@
 int read()
 {
   FILE* file = fopen ("min.txt", "r");
-  int i = 0;
+  int i;
 
   fscanf (file, "%d", &i);
   fclose (file);
+  printf("%d",i);
   return i;
 }

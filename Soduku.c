@@ -6,7 +6,7 @@
 #define ROW_OFFSET 81
 #define COLUMN_OFFSET 162
 #define BOX_OFFSET 243
-int checkifValid(int a[9][9]);
+//int checkifValid(int a[9][9]);
 
 struct node
 {

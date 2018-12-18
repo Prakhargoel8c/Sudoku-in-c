@@ -34,7 +34,7 @@ int ehard()
         }
     for(j=0; j<9; j++)
     {
-        for(k=0; k<3; k++)
+        for(k=0; k<6; k++)
         {
             if(i>0&&checkokehard(k))
             {

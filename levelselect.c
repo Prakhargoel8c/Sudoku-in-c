@@ -26,6 +26,10 @@ int level()
     {
         return 3;
     }
+    case 4:
+        {
+            return 4;
+        }
     case 0:
     {
         return 0;

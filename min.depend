@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1544985915 source:c:\users\rocki\documents\min\main.c
+1545097891 source:c:\users\rocki\documents\min\main.c
 	<windows.h>
 	<gl/gl.h>
 	<GL/glut.h>
@@ -15,7 +15,7 @@
 	<stdio.h>
 	<string.h>
 
-1544960427 source:c:\users\rocki\documents\min\soduku.c
+1545039662 source:c:\users\rocki\documents\min\soduku.c
 	<stdio.h>
 	<string.h>
 
@@ -29,21 +29,21 @@
 1544958243 source:c:\users\rocki\documents\min\eeasy.c
 	<stdio.h>
 
-1544968998 source:c:\users\rocki\documents\min\levelselect.c
+1545098074 source:c:\users\rocki\documents\min\levelselect.c
 	<stdio.h>
 
-1544968533 source:c:\users\rocki\documents\min\maingame.c
+1545030396 source:c:\users\rocki\documents\min\maingame.c
 	<stdio.h>
 	<stdlib.h>
 
-1544969771 source:c:\users\rocki\documents\min\readfile.c
+1545030549 source:c:\users\rocki\documents\min\readfile.c
 	<stdio.h>
 	<string.h>
 
 1544970929 source:c:\users\rocki\documents\min\medium.c
 	<stdio.h>
 
-1544971886 source:c:\users\rocki\documents\min\ehard.c
+1545098019 source:c:\users\rocki\documents\min\ehard.c
 	<stdio.h>
 
 1544971212 source:c:\users\rocki\documents\min\hard.c

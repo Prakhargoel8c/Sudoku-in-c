@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
+int read();
 int hard();
+int choice1;
 int holehard(int i,int j);
 int holeehard(int i,int j);
 int ehard();
@@ -166,7 +168,10 @@ void diagfill()
 void digholes()
 {
     int i,j,k=lev/5;
-    writefile(lev);
+    if(choice1==1)
+    {
+        writefile(lev);
+    }
     //int a,rh,ch,i=17;
     /*for(a=0;a<=i;a++)
     {
@@ -507,7 +512,26 @@ void SpecialKeys(int key, int x, int y)
 int main(int argc,char** argv)
 {
     srand(time(0));
-    lev=5*level();
+    printf("Press 1 to for main game\n");
+    printf("Press 2 to for level select \n");
+    scanf("%d",&choice1);
+    switch (choice1)
+    {
+    case 1:
+    {
+        lev=read();
+        break;
+    }
+    case 2:
+    {
+       lev=5*level();
+       break;
+
+    }
+    /*default:
+        printf("wrong Input\n");*/
+    }
+
     generateboard();
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
